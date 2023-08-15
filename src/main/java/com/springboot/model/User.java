@@ -1,4 +1,16 @@
 package com.springboot.model;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name = "user")
@@ -38,8 +50,5 @@ public class User {
     @Schema(description = "contact number", example = "1234564498", required = true)
     @NotBlank(message = "contact number is mandatory")
     private String contactNumber;
-
-
-
 
 }
