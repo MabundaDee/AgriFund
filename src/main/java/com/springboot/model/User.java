@@ -1,4 +1,16 @@
 package com.springboot.model;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name = "user")
@@ -10,21 +22,18 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Schema(description = "User ID", example = "1", required = true)
+    @Schema(description = "User ID", example = "1", hidden = true)
     private Long id;
 
-    @Column(name = "first_name")
-    @Schema(description = "first name", example = "John", required = true)
+    @Column(name = "first_name",nullable = false, length = 50)
     @NotBlank(message = "first name is mandatory")
     private String firstName;
 
-    @Column(name = "last_name")
-    @Schema(description = "last name", example = "Doe", required = true)
+    @Column(name = "last_name",nullable = false, length = 50)
     @NotBlank(message = "last name is mandatory")
     private String lastName;
 
     @Column(name = "email", unique = true)
-    @Schema(description = "email", example = "shay@gmail.com", required = true)
     @NotBlank(message = "email is mandatory")
     @Email(message = "email should be a valid email")
     private String email;
@@ -38,8 +47,5 @@ public class User {
     @Schema(description = "contact number", example = "1234564498", required = true)
     @NotBlank(message = "contact number is mandatory")
     private String contactNumber;
-
-
-
 
 }
