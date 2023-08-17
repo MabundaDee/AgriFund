@@ -33,18 +33,16 @@ public class User {
     @NotBlank(message = "last name is mandatory")
     private String lastName;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", unique = true, nullable = false, length = 50)
     @NotBlank(message = "email is mandatory")
     @Email(message = "email should be a valid email")
     private String email;
 
-    @Column(name = "password")
-    @Schema(description = "password", example = "123456", required = true)
+    @Column(name = "password",nullable = false, length = 50)
     @NotBlank(message = "password is mandatory")
     private String password;
 
-    @Column(name = "contact_number")
-    @Schema(description = "contact number", example = "1234564498", required = true)
+    @Column(name = "contact_number",nullable = false, length = 10)
     @NotBlank(message = "contact number is mandatory")
     private String contactNumber;
 
