@@ -1,5 +1,8 @@
 package com.springboot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +12,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -21,7 +27,7 @@ import javax.validation.constraints.NotBlank;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description = "User ID", example = "1", hidden = true)
     private Long id;
 
@@ -45,5 +51,19 @@ public class User {
     @Column(name = "contact_number",nullable = false, length = 10)
     @NotBlank(message = "contact number is mandatory")
     private String contactNumber;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles", joinColumns = {
+            @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)},
+            inverseJoinColumns = {
+            @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)})
+    @JsonIgnore
+    private Set<UserRole> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private Set<Portfolio> portfolios = new HashSet<>();
+
+
 
 }
