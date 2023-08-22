@@ -53,19 +53,23 @@ public class Portfolio {
     @NotBlank(message = "Residential address is required")
     private String address;
 
-    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
+    @Column(name = "reason for farming", nullable = false)
+    @NotBlank(message = "Reason for farming is required")
+    private String reasonForFarming;
+
+    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonBackReference
     private Set<Crops> crops;
 
-    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonBackReference
-     private Set<Plot> plots = new HashSet<>();
+     private Set<Plot> plots;
 
-    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonBackReference
     private Set<Asset> assets ;
 
-    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonBackReference
     private Set<IncomeStatement> incomeStatements;
 
